@@ -5,7 +5,10 @@ using namespace std;
 int main()
 {
   string s;
-  cin>>s;
+  while(s!="exit")
+  {
+    cin>>s;
+  }
 
   return 0;
 }
