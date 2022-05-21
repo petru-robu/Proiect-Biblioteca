@@ -11,7 +11,7 @@ Proiect Biblioteca
                     `---`
 ```
 
-   Proiectul are ca scop gestionarea activităților zilnice dintr-o singură bibliotecă. Din această
+      Proiectul are ca scop gestionarea activităților zilnice dintr-o singură bibliotecă. Din această
 bibliotecă se pot împrumuta o varietate de cărti. Orice carte are un cod unic, un titlu, un autor, un gen,
 un număr de pagini. De asemenea, se știe dacă o carte este sau nu disponibilă (este momentan
 împrumutata sau nu de altcineva). Există mai mulți clienți, identificați prin cod, nume, număr de cărți
