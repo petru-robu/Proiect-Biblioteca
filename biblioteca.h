@@ -20,6 +20,14 @@ public:
       else
         std::cout<<"INDISPONIBILA";
   }
+  bool operator==(const Carte c)
+  {
+    if(isbn == c.isbn)
+      return true;
+    else
+      return false;
+  }
+
 };
 
 class Date{
@@ -86,9 +94,12 @@ class Biblioteca{
 private:
   std::vector<Client*> listaClienti;
   std::vector<Carte> listaCarti;
+  std::vector<std::pair<Client*, Carte>> listaImprumuturi;
 
   int random(int min, int max);
+  Date randomDate();
   int findPosCarte(std::string isbn);
+  int findPosCarteTitlu(std::string titlu);
   int findPosClient(std::string nume);
   bool disp(Carte c);
   bool disp(Client *c);
@@ -98,6 +109,9 @@ public:
   void adaugaProfesor(std::string s1, std::string s2, std::string s3);
   void adaugaCarte(std::string isbn, std::string titlu,std::string autor, std::string gen, int nrPag);
 
+  void stergeCarte(std::string titlu);
+  void stergeClient(std::string nume);
+
   void afiseazaClienti();
   void afiseazaStudenti();
   void afiseazaProfesori();
@@ -106,6 +120,9 @@ public:
 
   void imprumutaCarte(std::string isbn, std::string nume);
   void returneazaCarte(std::string isbn, std::string nume);
+  void cautaCarte(std::string titlu);
+
+  void celMaiFidelCititor();
 
 };
 
@@ -120,12 +137,43 @@ int Biblioteca::random(int min, int max)
   return min + std::rand() % (( max + 1 ) - min);
 }
 
+Date Biblioteca::randomDate()
+{
+  Date ret;
+  ret.mm = random(1, 12);
+  if((ret.mm%2==1 && ret.mm<=7) || (ret.mm%2==0 && ret.mm>=8))
+    ret.dd = random(1, 31);
+  else
+    {
+      if(ret.mm != 2)
+        ret.dd = random(1, 31);
+      else
+        ret.dd = random(1, 28);
+    }
+  ret.yy = 2022;
+  return ret;
+}
+
 int Biblioteca::findPosCarte(std::string isbn)
 {
   int posCarte=-1;
   for(int i=0; i<listaCarti.size(); i++)
   {
-    if(listaCarti[i].isbn == isbn && listaCarti[i].available)
+    if(listaCarti[i].isbn == isbn)
+    {
+      posCarte=i;
+      break;
+    }
+  }
+  return posCarte;
+}
+
+int Biblioteca::findPosCarteTitlu(std::string titlu)
+{
+  int posCarte=-1;
+  for(int i=0; i<listaCarti.size(); i++)
+  {
+    if(listaCarti[i].titlu == titlu)
     {
       posCarte=i;
       break;
@@ -160,6 +208,7 @@ bool Biblioteca::disp(Client *c)
   else
     return false;
 }
+
 
 void Biblioteca::adaugaStudent(std::string s1, std::string s2, std::string s3, int a)
 {
@@ -246,51 +295,82 @@ void Biblioteca::afiseazaCartiDisponibile()
 void Biblioteca::imprumutaCarte(std::string isbn, std::string nume)
 {
   int posCarte = findPosCarte(isbn), posClient= findPosClient(nume);
-  if(posCarte==-1||posClient==-1)
+
+  if(posCarte==-1||posClient==-1||!disp(listaCarti[posCarte])||!disp(listaClienti[posClient]))
   {
     std::cout<<"Nu s-a putut imprumuta\n";
     return;
   }
 
-  if(disp(listaCarti[posCarte]) && disp(listaClienti[posClient]))
-  {
-    Date ret;
-    ret.mm = random(1, 12);
-    if((ret.mm%2==1 && ret.mm<=7) || (ret.mm%2==0 && ret.mm>=8))
-      ret.dd = random(1, 31);
-    else
-      {
-        if(ret.mm != 2)
-          ret.dd = random(1, 31);
-        else
-          ret.dd = random(1, 28);
-      }
-    ret.yy = 2022;
+  listaImprumuturi.push_back(std::make_pair(listaClienti[posClient], listaCarti[posCarte]));
 
-    listaClienti[posClient]->retur = ret;
-    listaCarti[posCarte].available = false;
-    listaClienti[posClient]->nrImp++;
-    std::cout<<"S-a imprumutat cu succes!\n\n";
-  }
+  listaClienti[posClient]->retur = randomDate();
+  listaCarti[posCarte].available = false;
+  listaClienti[posClient]->nrImp++;
+  std::cout<<"S-a imprumutat cu succes!\n\n";
 
 }
 
 void Biblioteca::returneazaCarte(std::string isbn, std::string nume)
 {
   int posCarte = findPosCarte(isbn), posClient= findPosClient(nume);
-  if(posCarte==-1||posClient==-1)
+
+  if(posCarte==-1||posClient==-1||disp(listaCarti[posCarte])||disp(listaClienti[posClient]))
   {
-    std::cout<<"Nu s-a putut returna\n";
+    std::cout<<"Nu s-a putut returna!\n\n";
     return;
   }
 
-  if(!disp(listaCarti[posCarte]) && !disp(listaClienti[posClient]))
+  for(int i=0; i<listaImprumuturi.size(); i++)
   {
-    Date ret;
-    ret.mm=0; ret.dd=0; ret.yy=0;
+    if(listaImprumuturi[i].first == listaClienti[posClient] && listaImprumuturi[i].second == listaCarti[posCarte])
+      {
+        Date ret;
+        ret.mm=0; ret.dd=0; ret.yy=0;
+        listaClienti[posClient]->retur = ret;
+        listaCarti[posCarte].available = true;
+        listaImprumuturi.erase(listaImprumuturi.begin()+i);
 
-    listaClienti[posClient]->retur = ret;
-    listaCarti[posCarte].available = true;
-    std::cout<<"S-a returnat cu succes!\n\n";
+        std::cout<<"S-a returnat cu succes!\n\n";
+        return;
+      }
   }
+  std::cout<<"Nu s-a putut returna!\n\n";
+
+}
+
+void Biblioteca::cautaCarte(std::string titlu)
+{
+  int pos = findPosCarteTitlu(titlu);
+  if(pos!=-1)
+    listaCarti[pos].print();
+}
+
+void Biblioteca::stergeCarte(std::string titlu)
+{
+  int pos = findPosCarteTitlu(titlu);
+  if(pos!=-1)
+    listaCarti.erase(listaCarti.begin()+pos);
+}
+
+void Biblioteca::stergeClient(std::string nume)
+{
+  int pos = findPosClient(nume);
+  if(pos!=-1)
+    listaClienti.erase(listaClienti.begin()+pos);
+}
+
+void Biblioteca::celMaiFidelCititor()
+{
+  int posmax=0;
+  int nrmax = listaClienti[0]->nrImp;
+  for(int i=0; i<listaClienti.size(); i++)
+  {
+    if(listaClienti[i]->nrImp > nrmax)
+    {
+      nrmax = listaClienti[i]->nrImp;
+      posmax = i;
+    }
+  }
+  listaClienti[posmax]->print();
 }
