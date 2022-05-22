@@ -26,8 +26,15 @@ int main()
 
   b.returneazaCarte("2", "Petru1");
   b.returneazaCarte("3", "Johnny1");
+  b.imprumutaCarte("2", "Petru1");
+  b.imprumutaCarte("4", "Johnny2");
+  b.imprumutaCarte("4", "Johnny2");
+  b.imprumutaCarte("2", "Petru1");
+  b.imprumutaCarte("4", "Johnny2");
+  b.imprumutaCarte("4", "Johnny2");
 
   b.afiseazaClienti();
   b.afiseazaCarti();
+  b.sorteazaClienti();
 
 }

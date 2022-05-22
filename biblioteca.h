@@ -27,7 +27,6 @@ public:
     else
       return false;
   }
-
 };
 
 class Date{
@@ -56,8 +55,6 @@ public:
     std::cout<<"COD:  "<<cod<<'\n'<<"NUM:  "<<nume<<'\n';
     std::cout<<"RET:  "<<retur<<'\n'<<"NRI:  "<<nrImp;
   }
-
-
 };
 
 class Profesor: public Client{
@@ -123,6 +120,9 @@ public:
   void cautaCarte(std::string titlu);
 
   void celMaiFidelCititor();
+  void sorteazaCarti();
+  void sorteazaClienti();
+  void filtreazaCartiDupaGen(std::string gen);
 
 };
 
@@ -373,4 +373,37 @@ void Biblioteca::celMaiFidelCititor()
     }
   }
   listaClienti[posmax]->print();
+  std::cout<<"\n\n";
+}
+
+void Biblioteca::sorteazaCarti()
+{
+  std::vector<Carte> c_listaCarti(listaCarti);
+  for(int i=0 ; i<c_listaCarti.size()-1; i++)
+    for(int j=i; j<c_listaCarti.size(); j++)
+      if(c_listaCarti[j].nrPag < c_listaCarti[i].nrPag)
+        std::swap(c_listaCarti[j], c_listaCarti[i]);
+
+  for(auto carte:c_listaCarti)
+  {
+    carte.print();
+    std::cout<<"\n\n";
+  }
+  std::cout<<"\n\n\n";
+}
+
+void Biblioteca::sorteazaClienti()
+{
+  std::vector<Client*> c_listaClienti(listaClienti);
+  for(int i=0 ; i<c_listaClienti.size()-1; i++)
+    for(int j=i; j<c_listaClienti.size(); j++)
+      if(c_listaClienti[j]->nume < c_listaClienti[i]->nume)
+        std::swap(c_listaClienti[j], c_listaClienti[i]);
+
+  for(auto cl:c_listaClienti)
+  {
+    cl->print();
+    std::cout<<"\n\n";
+  }
+  std::cout<<"\n\n\n";
 }
