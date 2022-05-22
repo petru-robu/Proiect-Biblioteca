@@ -1,0 +1,13 @@
+adaugaStudent 175 Petru-Robu Liceul-Sava 10
+adaugaStudent 123 Johnny-Savu Fac-de-Metematica-Informatica 3
+adaugaProfesor 156 Savu-Johnny Informatica
+adaugaProfesor 119 Robu-Petru Smecherie
+adaugaStudent 745 Ana Fac-de-Economie 5
+adaugaProfesor 112 Mihai Romana
+adaugaCarte 1 Cartea-Magica Petru Fantastic 147
+adaugaCarte 2 Alice-in-tara-minunilor Johnney Politist 710
+adaugaCarte 3 Cartea-Horror Maria Horror 30
+adaugaCarte 4 Ion Liviu-Rebreanu Mizerie 367
+afiseazaClienti
+afiseazaCarti
+exit
