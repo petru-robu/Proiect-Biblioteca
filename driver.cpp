@@ -1,19 +1,19 @@
 #include <bits/stdc++.h>
-#include "biblioteca.h"
+#include "headers/manager.h"
+
 using namespace std;
 
 ifstream fin("comenzi.in");
 
 int main()
 {
-  Manager m;
+  Manager man;
   string s;
   while(s!="exit")
-    m.command(s, fin);
+    man.command(s, fin);
 
   s="";
   while(s!="exit")
-    m.command(s, cin);
-
+    man.command(s, cin);
 
 }
