@@ -1,8 +1,8 @@
-
+#include "../headers/student.h"
 
 Student::Student(std::string s1, std::string s2, std::string s3, int a): Client(s1, s2), facultate(s3), anStudiu(a){}
 
-void Student::print() override
+void Student::print()
 {
   std::cout<<"COD:  "<<cod<<'\n'<<"NUM:  "<<nume<<'\n';
   std::cout<<"FAC:  "<<facultate<<'\n'<<"ANS:  "<<anStudiu<<'\n';

@@ -1,3 +1,10 @@
+#include "sources/biblioteca.cpp"
+#include "sources/carte.cpp"
+#include "sources/client.cpp"
+#include "sources/manager.cpp"
+#include "sources/profesor.cpp"
+#include "sources/student.cpp"
+
 #include <bits/stdc++.h>
 #include "headers/manager.h"
 
@@ -7,13 +14,13 @@ ifstream fin("comenzi.in");
 
 int main()
 {
-  Manager man;
+  Manager* manager = manager->getInstance();
   string s;
   while(s!="exit")
-    man.command(s, fin);
+    manager->query(s, fin);
 
   s="";
   while(s!="exit")
-    man.command(s, cin);
+    manager->query(s, cin);
 
 }

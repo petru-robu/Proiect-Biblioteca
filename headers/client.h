@@ -1,10 +1,11 @@
-#include <bits/stdc++.h>
-#include "../sources/client.cpp"
+#ifndef INCLUDED_CLIENT
+#define INCLUDED_CLIENT
 
+#include <bits/stdc++.h>
 #include "date.h"
 
 class Client{
-private:
+protected:
   std::string cod, nume;
   Date retur;
   int nrImp;
@@ -15,6 +16,11 @@ public:
 
   std::string get_cod();
   std::string get_nume();
-  Date get_date();
+  Date get_retur();
   int get_nrImp();
+
+  void set_nrImp(int x);
+  void set_retur(Date d);
 };
+
+#endif

@@ -1,3 +1,13 @@
+#include "../headers/biblioteca.h"
+
+Biblioteca* Biblioteca::instance = 0;
+
+Biblioteca* Biblioteca::getInstance()
+{
+  if(!instance)
+    instance = new Biblioteca;
+  return instance;
+}
 
 int Biblioteca::random(int min, int max)
 {
@@ -177,9 +187,9 @@ void Biblioteca::imprumutaCarte(std::string isbn, std::string nume)
 
   listaImprumuturi.push_back(std::make_pair(listaClienti[posClient], listaCarti[posCarte]));
 
-  listaClienti[posClient]->retur = randomDate();
-  listaCarti[posCarte].available = false;
-  listaClienti[posClient]->nrImp++;
+  listaClienti[posClient]->set_retur(randomDate());
+  listaCarti[posCarte].set_status(false);
+  listaClienti[posClient]->set_nrImp(listaClienti[posClient]->get_nrImp()+1);
   std::cout<<"S-a imprumutat cu succes!\n\n";
 
 }
@@ -200,8 +210,8 @@ void Biblioteca::returneazaCarte(std::string isbn, std::string nume)
       {
         Date ret;
         ret.mm=0; ret.dd=0; ret.yy=0;
-        listaClienti[posClient]->get_retur() = ret;
-        listaCarti[posCarte].get_status() = true;
+        listaClienti[posClient]->set_retur(ret);
+        listaCarti[posCarte].set_status(true);
         listaImprumuturi.erase(listaImprumuturi.begin()+i);
 
         std::cout<<"S-a returnat cu succes!\n\n";
@@ -223,14 +233,18 @@ void Biblioteca::stergeCarte(std::string titlu)
 {
   int pos = findPosCarteTitlu(titlu);
   if(pos!=-1)
-    listaCarti.erase(listaCarti.begin()+pos);
+    {listaCarti.erase(listaCarti.begin()+pos); std::cout<<"S-a sters cu succes!\n";}
+  else
+    std::cout<<"Nu s-a putut sterge!\n";
 }
 
 void Biblioteca::stergeClient(std::string nume)
 {
   int pos = findPosClient(nume);
   if(pos!=-1)
-    listaClienti.erase(listaClienti.begin()+pos);
+    {listaClienti.erase(listaClienti.begin()+pos); std::cout<<"S-a sters cu succes!\n";}
+  else
+    std::cout<<"Nu s-a putut sterge!\n";
 }
 
 void Biblioteca::celMaiFidelCititor()

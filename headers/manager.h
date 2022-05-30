@@ -1,16 +1,22 @@
+#ifndef INCLUDED_MANAGER
+#define INCLUDED_MANAGER
+
 #include <bits/stdc++.h>
-#include "../sources/manager.cpp"
-
 #include "biblioteca.h"
-
 
 class Manager
 {
 private:
+  static Manager *instance;
+
   std::map<int, std::string> Map;
-  Biblioteca b;
+  Biblioteca* b = b->getInstance();
+
+  Manager(){}
 
 public:
-  Manager();
-  void command(std::string &string, std::istream &cin);
+  static Manager* getInstance();
+  void query(std::string &string, std::istream &cin);
 };
+
+#endif

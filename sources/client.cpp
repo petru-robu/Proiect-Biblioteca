@@ -1,3 +1,4 @@
+#include "../headers/client.h"
 
 Client::Client(std::string s1, std::string s2): cod(s1), nume(s2)
 {
@@ -5,7 +6,7 @@ Client::Client(std::string s1, std::string s2): cod(s1), nume(s2)
   nrImp=0;
 }
 
-virtual void Client::print()
+void Client::print()
 {
   std::cout<<"COD:  "<<cod<<'\n'<<"NUM:  "<<nume<<'\n';
   std::cout<<"RET:  "<<retur<<'\n'<<"NRI:  "<<nrImp;
@@ -26,4 +27,16 @@ Date Client::get_retur()
 int Client::get_nrImp()
 {
   return nrImp;
+}
+
+void Client::set_nrImp(int x)
+{
+  nrImp = x;
+}
+
+void Client::set_retur(Date d)
+{
+  retur.dd = d.dd;
+  retur.mm = d.mm;
+  retur.yy = d.yy;
 }

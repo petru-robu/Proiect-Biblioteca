@@ -1,3 +1,6 @@
+#ifndef INCLUDED_DATE
+#define INCLUDED_DATE
+
 #include <bits/stdc++.h>
 
 struct Date{
@@ -9,3 +12,5 @@ struct Date{
     return out;
   }
 };
+
+#endif

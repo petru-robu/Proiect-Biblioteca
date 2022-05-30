@@ -1,5 +1,7 @@
+#ifndef INCLUDED_CARTE
+#define INCLUDED_CARTE
+
 #include <bits/stdc++.h>
-#include "../sources/carte.cpp"
 
 class Carte
 {
@@ -18,6 +20,11 @@ public:
   int get_nrPag();
   bool get_status();
 
+  void set_status(bool b);
+
   void print();
+  
   bool operator==(const Carte c);
 };
+
+#endif
