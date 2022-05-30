@@ -10,7 +10,7 @@
 
 using namespace std;
 
-ifstream fin("comenzi.in");
+ifstream fin("fisier.in");
 
 int main()
 {
